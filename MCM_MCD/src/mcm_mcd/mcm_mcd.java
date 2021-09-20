@@ -97,20 +97,28 @@ public class mcm_mcd {
         int  x = 1, i = 0;
         
         ft_get_mcd(mcd);
+        ft_get_mcm(i, x, mcm);                        
+    }
+
+    private void    ft_get_mcm(int i, int x, double mcm) 
+    {
         while(i < all_div.length)
         {  
             x = mts.ft_find_next_prime(x);
-           if(utl.ft_index_of(all_div[i], x) == -1)
-           {
-               i++;
-               if(i == all_div.length && x < max_div)
-                   i = 0;
-               continue;
-           }
+            if(utl.ft_index_of(all_div[i], x) == -1)
+            {
+                i++;
+                if(i == all_div.length && x < max_div)
+                {
+                    i = 0;
+                    x++;
+                }
+                continue;
+            }
             mcm = mcm * Math.pow(x, mts.ft_count_max(all_div, x));
             x++;
             i = 0;
-        } 
+        }
         System.out.println("m.c.m. = " + mcm);                        
     }
 
@@ -118,11 +126,15 @@ public class mcm_mcd {
     {
         int aux;
          
+        aux = 0;
         for(int j = 0; j < all_div[0].length; j++)
         {
-           aux = all_div[0][j];
-            if (utl.ft_check_aux(aux, 1, all_div))
-                mcd = mcd * Math.pow(aux, mts.ft_count_min(all_div, aux));
+            if(aux != all_div[0][j])
+            {
+             aux = all_div[0][j];
+             if (utl.ft_check_aux(aux, 1, all_div))
+                 mcd = mcd * Math.pow(aux, mts.ft_count_min(all_div, aux));
+            }
         }
         System.out.println("m.c.d. = " + mcd);
     }
