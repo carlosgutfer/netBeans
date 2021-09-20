@@ -7,14 +7,14 @@ package mcm_mcd;
 
 import java.util.ArrayList;
 import java.util.Scanner;
-
+import shm.maths_methods;
 
 public class mcm_mcd {
 
      private final Scanner sc = new Scanner(System.in);
      private ArrayList<Integer> all_num = new ArrayList();
      private int all_div [][];
-     private final maths_method mts = new maths_method();
+     private final maths_methods mts = new maths_methods();
      private final Utilties utl = new Utilties();
      private int max_div;
  

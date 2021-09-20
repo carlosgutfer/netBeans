@@ -3,15 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mcm_mcd;
+package shm;
 
 /**
  *
  * @author carlo
  */
-public class maths_method {
- 
-   public int ft_count_min(int [][] all_div, int n)
+public class maths_methods {
+    
+     public int ft_count_min(int [][] all_div, int n)
     {
         int x = 1, cont;
         for(int i = 0; i < all_div.length; i++)
@@ -58,7 +58,7 @@ public class maths_method {
             return (ft_sqrt(nb / 100) * 10 + (a - 1));
     }
 
-    private int ft_is_prime(int nb)
+    public int ft_is_prime(int nb)
     {
             int	i;
             int	j;
@@ -81,4 +81,5 @@ public class maths_method {
                     return (ft_find_next_prime(nb + 1));
     }
 
+    
 }
