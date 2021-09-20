@@ -28,12 +28,12 @@ public class mcm_mcd {
 
     private void    ft_getNum() 
     {
-    System.out.println("Escribe un número para guardarlo en el array ó menor que cero para salir");
+    System.out.println("Escribe un número para guardarlo en el array o menor  o igual a cero para salir");
     int num = sc.nextInt();
     while (num > 0)
     {
         all_num.add(num);
-        System.out.println("Escribe un número para guardarlo en el array ó menor que cero para salir");
+        System.out.println("Escribe un número para guardarlo en el array o menor o igual a cero para salir");
         num = sc.nextInt();
         if (num <= 0)
             break;
@@ -111,12 +111,12 @@ public class mcm_mcd {
             x++;
             i = 0;
         } 
-        System.out.println(mcm);                        
+        System.out.println("m.c.m. = " + mcm);                        
     }
 
     private void    ft_get_mcd(double mcd) 
     {
-         int aux;
+        int aux;
          
         for(int j = 0; j < all_div[0].length; j++)
         {
@@ -124,7 +124,7 @@ public class mcm_mcd {
             if (utl.ft_check_aux(aux, 1, all_div))
                 mcd = mcd * Math.pow(aux, mts.ft_count_min(all_div, aux));
         }
-        System.out.println(mcd);
+        System.out.println("m.c.d. = " + mcd);
     }
   
 }
