@@ -25,6 +25,7 @@ public class maths_method {
         }
        return x;
     }
+   
     public int ft_count_max(int [][] all_div, int n)
     {
         int x = 1, cont;
@@ -39,7 +40,7 @@ public class maths_method {
         }
        return x;
     }
-
+    
     private int ft_sqrt(int nb)
     {
             int	a;
