@@ -31,10 +31,12 @@ public class Ejercicio1ABD {
 
     private static void leerArchivoTexto(File newFile) throws IOException {
         int letraAscii = 1;
-        int contador [] = new int [26];
-        for(int i = 0; i < contador.length; i++)
+        int[] abecedario = new int [26];
+        int contadorLineas = 0;
+        
+        for(int i = 0; i < abecedario.length; i++)
         {
-            contador[i] = 0;
+            abecedario[i] = 0;
         }
      
         FileReader fr = new FileReader(newFile);
@@ -42,11 +44,13 @@ public class Ejercicio1ABD {
         {
             letraAscii = fr.read();
             if (letraAscii - 97 > -1 && letraAscii - 97 < 27)
-            contador[letraAscii - 97]++;
+            abecedario[letraAscii - 97]++;
+            if(letraAscii == 10)
+                contadorLineas++;
         }
         fr.close();
         
-        escribirArchivoLetras(contador);
+        escribirArchivoLetras(abecedario);
 
     }
 
