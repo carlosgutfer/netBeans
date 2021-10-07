@@ -25,14 +25,28 @@ public class Ejercicio8_HojaRepaso_AAD {
         File    inventario = new File("inventario.txt");
         ArrayList<Productos> todosLosProductos = new ArrayList<Productos>();
         crearArrayProductos(inventario, todosLosProductos);
-        todosLosProductos.forEach(c -> {
-        System.out.println(c.toString());
-        });
         modificarProductos(todosLosProductos);
-        todosLosProductos.forEach(c -> {
-        System.out.println(c.toString());
-        });
+        modificarFicheroInventario(todosLosProductos, inventario);
         
+    }
+
+    private static void modificarFicheroInventario(ArrayList<Productos> todosLosProductos, File inventario) 
+    {
+        String      datosProducto [];
+        Productos   producto;
+        File        aux;
+        
+        aux = new File("auxiliar.txt");
+        
+        
+        
+        datosProducto = new String [4];
+        for(int i = 0; i < todosLosProductos.size(); ++i)
+        {
+            producto = todosLosProductos.get(i);
+            datosProducto  = (producto.toString()).split(" ");
+            
+        }
     }
 
     private static void crearArrayProductos(File inventario, ArrayList todosLosProductos) throws NumberFormatException 
@@ -42,8 +56,7 @@ public class Ejercicio8_HojaRepaso_AAD {
         String          frase;
         FileReader      fr;
         BufferedReader  br;
-        
-        lectura  = new String [4];
+ 
         try {
             fr = new FileReader(inventario);
             br = new BufferedReader(fr);
@@ -76,7 +89,6 @@ public class Ejercicio8_HojaRepaso_AAD {
         Scanner         sc = new Scanner(System.in);
         
         movimientos = new File("movimientos.txt");
-        lectura = new String [3]; 
         try
         {
             fr = new FileReader(movimientos);
