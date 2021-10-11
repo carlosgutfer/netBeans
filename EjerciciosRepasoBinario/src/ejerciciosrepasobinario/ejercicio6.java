@@ -21,7 +21,7 @@ import java.io.IOException;
  */
 public class ejercicio6 {
     
-    public static void main(String args []) throws IOException
+    public  void main(String args []) throws IOException
     {
         
         String nombre, apellidos, email, residencia, nacionalidad, profesion;
