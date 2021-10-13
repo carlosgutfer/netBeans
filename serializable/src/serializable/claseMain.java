@@ -90,7 +90,8 @@ public class claseMain {
                 
          
                 try{
-                    while(true){
+                    while(true)
+                    {
                        persona p = (persona) ois.readObject();
                     System.out.println(p.getEdad());
                     
