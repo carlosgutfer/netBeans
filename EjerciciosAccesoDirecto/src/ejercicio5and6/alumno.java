@@ -47,6 +47,11 @@ public class alumno implements Serializable
     public void setNota(int nota) {
         this.nota = nota;
     }
+
+    @Override
+    public String toString() {
+        return "alumno{" + "nClase=" + nClase + ", nombre=" + nombre + ", nota=" + nota + '}';
+    }
     
     
 }
