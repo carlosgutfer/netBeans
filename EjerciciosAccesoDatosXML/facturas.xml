@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Facturas>
+    <factura NIF="11111111F">
+        <Nombre>Julia Mendez</Nombre>
+        <descripcion>Teclado</descripcion>
+        <Unidades>10</Unidades>
+        <Precio>90</Precio>
+        <Total>900</Total>
+    </factura>
+    <factura NIF="22222222N">
+        <Nombre>Ricardo Jaen</Nombre>
+        <descripcion>Raton</descripcion>
+        <Unidades>30</Unidades>
+        <Precio>20</Precio>
+        <Total>600</Total>
+    </factura>
+    <factura NIF="33333333J">
+        <Nombre>Aurora Martin</Nombre>
+        <descripcion>Escaner</descripcion>
+        <Unidades>2</Unidades>
+        <Precio>175</Precio>
+        <Total>350</Total>
+    </factura>
+    <factura NIF="444444444P">
+        <Nombre>Alberto Molina</Nombre>
+        <descripcion>Raton</descripcion>
+        <Unidades>25</Unidades>
+        <Precio>20</Precio>
+        <Total>500</Total>
+    </factura>
+</Facturas>

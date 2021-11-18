@@ -18,6 +18,9 @@ public class Alumno
    private int nota2;
    private int proyecto;
    private int practica;
+   private double notaMedia;
+
+
 
     public Alumno(String jj, String nombre, int nota1, int nota2, int proyecto, int practica) {
         this.id = jj;
@@ -78,6 +81,15 @@ public class Alumno
 
     public void setPractica(int practica) {
         this.practica = practica;
+    }
+    
+    public double getNotaMedia() {
+        return notaMedia;
+    }
+
+    public void setNotaMedia(double notaMedia) 
+    {
+        this.notaMedia = notaMedia;
     }
 
     @Override

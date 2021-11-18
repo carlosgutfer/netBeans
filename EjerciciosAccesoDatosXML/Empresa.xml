@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<empresa>
+    <departamento numeroDepartamento="1">
+        <nombre>Ventas</nombre>
+        <localidad>Madrid</localidad>
+    </departamento>
+    <departamento numeroDepartamento="2">
+        <nombre>RRHH</nombre>
+        <localidad>Madrid</localidad>
+    </departamento>
+    <departamento numeroDepartamento="3">
+        <nombre>Logística</nombre>
+        <localidad>Alcalá</localidad>
+    </departamento>
+</empresa>

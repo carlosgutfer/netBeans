@@ -16,8 +16,13 @@ import org.xml.sax.helpers.DefaultHandler;
  */
 public class Manejador extends DefaultHandler
 {
+
+    static ArrayList<Alumno> getAlumnos() 
+    {
+        return alumnos;
+    }
     StringBuilder sb = new StringBuilder();
-    ArrayList<Alumno> alumnos = new ArrayList<Alumno>();
+    static ArrayList<Alumno> alumnos = new ArrayList<Alumno>();
     Alumno a;
     
     @Override
@@ -29,7 +34,20 @@ public class Manejador extends DefaultHandler
     public void endElement(String uri, String localname, String qname) throws SAXException {
             switch(qname)
             {
-                case "alumno":
+                case "nombre":
+                        a.setNombre(sb.toString());
+                    break;
+                case "nota1":
+                    a.setNota1(Integer.valueOf(sb.toString()));
+                    break;
+                case "nota2":
+                        a.setNota1(Integer.valueOf(sb.toString()));
+                    break;
+                case "practica":
+                        a.setPractica(Integer.valueOf(sb.toString()));                    
+                    break;
+                case "proyecto":
+                        a.setProyecto(Integer.valueOf(sb.toString()));                                        
                     break;
             }
     }
@@ -41,6 +59,14 @@ public class Manejador extends DefaultHandler
             {
                 case "alumno":
                                 a = new Alumno(atrbts.getValue("id"));
+                                alumnos.add(a);
+                    break;
+                case "nombre":
+                case "nota1":
+                case "nota2":
+                case "practica":
+                case "proyecto":
+                    sb.delete(0, sb.length());
                     break;
             }
     }
