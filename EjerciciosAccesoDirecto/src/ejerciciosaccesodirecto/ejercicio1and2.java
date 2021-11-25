@@ -21,7 +21,7 @@ public class ejercicio1and2 {
     /**
      * @param args the command line arguments
      */
-    public  void main(String[] args) throws IOException 
+    public   void main(String[] args) throws IOException 
     {
         File f1 = new File ("ficheroAleatorio.bin");
         if (f1.exists())
