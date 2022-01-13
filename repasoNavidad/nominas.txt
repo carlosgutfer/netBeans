@@ -1,0 +1,5 @@
+1/carlos/2000
+2/Juan/3500
+3/Pablo/2000
+4/Luis/1500
+5/Pepe/2000
