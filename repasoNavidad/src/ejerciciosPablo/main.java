@@ -23,7 +23,7 @@ import java.util.logging.Logger;
  * @author Pablo
  */
 public class main {
-    public static void main(String[] args) {
+    public  void main(String[] args) {
        File fcBin = new File("vehiculo.dat"); 
        
        File fcSeria = new File("vehiculo.obj");

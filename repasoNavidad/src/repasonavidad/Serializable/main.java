@@ -12,6 +12,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -21,10 +22,12 @@ import java.util.logging.Logger;
  */
 public class main {
     
-    public static void main(String[] args) 
+   Scanner sc = new Scanner(System.in);
+   static File f1 = new File("alumnos.obj");
+
+    public  void main(String[] args) 
     {
-        File f1 = new File("alumnos.obj");
-        
+  
         if(f1.exists())
             f1.delete();
         try 
@@ -38,25 +41,64 @@ public class main {
         {
             FileOutputStream    fos = new FileOutputStream(f1);
             ObjectOutputStream  oos = new ObjectOutputStream(fos); //esto es como que añade al fichero que es del tipo alumno
-            
+            oos.writeObject(new Alumno(1, "carlos", "gutierrez"));
             oos.close();
             fos.close();        
         } catch (FileNotFoundException ex) {
         } catch (IOException ex) {
         }
-        leer_fichero(f1);
-        añadir_datos(f1);  
-        leer_fichero(f1);
+        añadir_datos();  
+        
+        leer_fichero();
+        modificar_fichero_serializable(); 
+        leer_fichero();
+
     }     
 
-    private static void añadir_datos(File f1) 
+    private static void modificar_fichero_serializable() {
+        try
+        {
+            File auxiliar =  new File ("hola.obj");
+            
+            FileInputStream fis = new FileInputStream(f1);
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            
+            FileOutputStream fos = new FileOutputStream(auxiliar);
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            
+            try 
+            {
+                Alumno alumno;
+                while(true)
+                {
+                    alumno = (Alumno) ois.readObject();
+                    if(alumno.getId()!= 2)
+                        oos.writeObject(alumno);
+                }
+            } catch (Exception e) {
+            }
+            
+            ois.close();
+            fis.close();
+            
+            oos.close();
+            fos.close();
+            
+            f1.delete();
+            auxiliar.renameTo(f1);
+        } catch (IOException ex) {
+        }
+    }     
+
+    private static void añadir_datos() 
     {
         try
         {
             FileOutputStream    fos = new FileOutputStream(f1, true);
             MiClaseOutput       moo = new MiClaseOutput(fos); //esta, como ya tiene tipo, no lo vuelve a añadir porque daría error.
-            moo.writeObject(new Alumno(1, "carlos", "gutierrez"));
+           
             moo.writeObject(new Alumno(2, "Pepe", "palotes"));
+            moo.writeObject(new Alumno(3, "Juan", "JUNA"));
             moo.close();
             fos.close();     
         } catch (FileNotFoundException ex) {
@@ -64,7 +106,7 @@ public class main {
         }
     }     
 
-    private static void leer_fichero(File f1) 
+    private static void leer_fichero() 
     {
         try
         {
@@ -78,13 +120,15 @@ public class main {
                     alumno = (Alumno) ois.readObject();
                     System.out.println(alumno.toString());
                 }
-            }catch (ClassNotFoundException ex) {
-               
+                
+            }catch (Exception ex) {
+
             }
-            ois.close();
-            fis.close(); 
+             ois.close();
+            fis.close();
         } catch (FileNotFoundException ex) {
         } catch (IOException ex) {
+
         }
     }     
 }

@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 02-feb-2022 12:00:14 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="POJO.Notas" table="notas" catalog="instituto" optimistic-lock="version">
+        <composite-id name="id" class="POJO.NotasId">
+            <key-property name="mat" type="string">
+                <column name="Mat" length="10" />
+            </key-property>
+            <key-property name="cod" type="byte">
+                <column name="COD" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="alumnos" class="POJO.Alumnos" update="false" insert="false" fetch="select">
+            <column name="Mat" length="10" not-null="true" />
+        </many-to-one>
+        <many-to-one name="asignaturas" class="POJO.Asignaturas" update="false" insert="false" fetch="select">
+            <column name="COD" not-null="true" />
+        </many-to-one>
+        <property name="nota1" type="java.lang.Integer">
+            <column name="NOTA1" />
+        </property>
+        <property name="nota2" type="java.lang.Integer">
+            <column name="NOTA2" />
+        </property>
+        <property name="nota3" type="java.lang.Integer">
+            <column name="NOTA3" />
+        </property>
+    </class>
+</hibernate-mapping>
