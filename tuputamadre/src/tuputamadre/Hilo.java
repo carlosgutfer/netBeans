@@ -6,20 +6,14 @@
 package tuputamadre;
 
 import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.net.Socket;
-import java.nio.ByteBuffer;
-import java.util.ArrayList;
+import java.net.SocketException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -30,53 +24,97 @@ import javax.imageio.ImageIO;
  */
 public class Hilo implements  Runnable{
 
-    private Socket s;
+    private final Socket s;
     public Hilo(Socket s) {
         this.s = s;
     }
 
     
     @Override
-    public void run() {
+    public void run() 
+    {
+           
+
+            byte [] html_index = getHTML("site\\index.html");
+            byte [] html_pagina2 = getHTML("site\\pagina2.html");
+            byte [] css = getHTML("site\\main.css");
+            byte [] icon = getHTML("site\\favicon.ico");
+            // BufferedImage image = getImagesAndIcon(in);
+            
+            String respuesta_index = "HTTP/1.1 200 OK \r\nContent-Type: text/html \r\nContent-Length: " + html_index.length + "\n\r\n\r" ;
+            String respuesta_pagina2 = "HTTP/1.1 200 OK \r\nContent-Type: text/html \r\nContent-Length: " + html_pagina2.length  + "\r\n\r\n";
+            String respuesta_css = "HTTP/1.1 200 OK  \r\n Content-Type: text/css \r\n Content-Length: " + css.length + "\r\n\r\n";
+            String respuesta_icon = "HTTP/1.1 200 OK  \r\n Content-Type: image/ico \r\n Content-Length: " + icon.length + "\r\n\r\n";
+            
+            String cabecera;
+            boolean cerrado = true;
+                while(cerrado)
+                {
+                  InputStream  in = getInput();
+                   OutputStream  out = getOutPut();    
+                    cabecera = "";
+                    cabecera = leer_cabecera(in, cabecera);
+                    if(cabecera.contains("GET / HTTP/1.1") || cabecera.contains("GET /index.html HTTP/1.1"))
+                        enviar_mensaje(out, respuesta_index, html_index, cerrado);
+                    else if(cabecera.contains("GET /pagina2.html HTTP/1.1"))
+                        enviar_mensaje(out, respuesta_pagina2, html_pagina2, cerrado);
+                    else if(cabecera.contains("GET /main.css HTTP/1.1"))
+                        enviar_mensaje(out, respuesta_css, css, cerrado);
+                    else if(cabecera.contains("GET /favicon.ico HTTP/1.1"))
+                        enviar_mensaje(out, respuesta_icon, icon, cerrado);
+                    System.out.println(cabecera);
+
+                }
+           
+    }
+
+    private OutputStream getOutPut() {
+        OutputStream  out = null;
+        try {
+            out = s.getOutputStream();
+        } catch (IOException ex) {
+            Logger.getLogger(Hilo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return out;
+    }
+
+    private InputStream getInput()  {
+        InputStream  in = null;
+        try {
+            in = s.getInputStream();
+        } catch (IOException ex) {
+            Logger.getLogger(Hilo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return in;
+    }
+
+    private String leer_cabecera(InputStream in, String cabecera)  {
+        int _byte;
+        boolean encontrado = false;
+        try {
+            while((_byte = in.read()) != -1 && !encontrado)
+            {
+                    if(_byte != 13)
+                        cabecera += (char)_byte;
+                    else 
+                        encontrado = true;
+            }
+        } catch (IOException ex) {
+        }
+        return cabecera;
+    }
+
+    private void enviar_mensaje(OutputStream out, String respuesta_index, byte[] html_index, boolean  cerrado){
+        
         try 
         {
-            
-            InputStream in = s.getInputStream();
-            OutputStream out = s.getOutputStream();
-            
-            String html_index = getHTML("C:\\Users\\carlo\\NetBeansProjects\\tuputamadre\\site\\index.html");
-            String html_pagina2 = getHTML("C:\\Users\\carlo\\NetBeansProjects\\tuputamadre\\site\\pagina2.html");
-            String css = getHTML("C:\\Users\\carlo\\NetBeansProjects\\tuputamadre\\site\\main.css");
-           // BufferedImage image = getImagesAndIcon(in);
-
-            String respuesta_index = "HTTP/1.1 200 OK \n\r Content-Length: " + html_index.getBytes().length + "\n\r\n\r" + html_index + "\n\r\n\r";
-            String respuesta_pagina2 = "HTTP/1.1 200 OK \n\r Content-Length: " + html_pagina2.getBytes().length  + "\n\r\n\r" + html_pagina2 + "\n\r\n\r";
-            String respuesta_css = "HTTP/1.1 200 OK \n\r Content-Length: " +  + css.getBytes().length + "\n\r\n\r" + css + "\n\r\n\r";
-            
-            int _byte;
-            String cabecera;
-            boolean datos_obtenidos;
-            
-            datos_obtenidos = false;
-            cabecera = "";
-             while((_byte = in.read()) >= 0 && !datos_obtenidos)
-             {
-                if(_byte == 13)
-                    datos_obtenidos = true;
-                else if(!datos_obtenidos)
-                    cabecera += (char)_byte;
-                   
-             }
-             System.out.println("--->" + cabecera);
-            if(cabecera.equals("GET / HTTP/1.1") || cabecera.equals("GET /index.html HTTP/1.1"))
-                out.write(respuesta_index.getBytes());
-            else if(cabecera.equals("GET /pagina2.html HTTP/1.1"))
-                out.write(respuesta_pagina2.getBytes());
-            else if(cabecera.equals("GET /main.css HTTP/1.1"))
-                out.write(respuesta_css.getBytes());
-         //   else if(cabecera.equals("GET /imagen.png HTTP/1.1"))
-               // ImageIO.write(image, "png", new File("C:\\Users\\carlo\\NetBeansProjects\\tuputamadre\\site\\imagen.png"));
-        } catch (IOException ex) {}
+            out.write(respuesta_index.getBytes());
+            out.write(html_index);
+            out.write("\n\r\n\r".getBytes());
+        } catch (IOException ex) {
+            System.out.println("El navegador se ha cerrado");
+            cerrado = false;
+        }
     }
 
     private BufferedImage getImagesAndIcon(InputStream in) {
@@ -89,23 +127,17 @@ public class Hilo implements  Runnable{
          return image;
     }
     
-     private static String getHTML(String siteindexhtml) 
+     private static byte [] getHTML(String siteindexhtml) 
     {
-        FileReader  fr = null;
-        String texto = "";
-        try 
-        {
-            fr = new FileReader(siteindexhtml);
-            BufferedReader br = new BufferedReader(fr);
-            try
-            {
-                String line;
-                while((line = br.readLine()) != null)
-                    texto += line;
-            } catch (Exception e) {System.out.println("fallo");}
-        } catch (FileNotFoundException ex) { } 
-        
-           return texto;
+         byte[] bytes = null;
+        try {
+            bytes = Files.readAllBytes(Paths.get(siteindexhtml));
+        } catch (IOException ex) {
+            Logger.getLogger(Hilo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return bytes;  
     }
+   
+     
     
 }

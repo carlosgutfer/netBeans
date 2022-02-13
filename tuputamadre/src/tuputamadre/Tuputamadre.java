@@ -7,9 +7,6 @@ package tuputamadre;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 
 /**
  *
@@ -46,11 +43,7 @@ public class Tuputamadre {
         Thread t = new Thread(h);
         t.start();
         
-        try {
-            t.join();
-        } catch (InterruptedException ex) {
-            Logger.getLogger(Tuputamadre.class.getName()).log(Level.SEVERE, null, ex);
-        }
+     
     }
     
     
@@ -60,8 +53,7 @@ public class Tuputamadre {
         try 
         {
              s = new ServerSocket(8081);
-        } catch (IOException ex) {
-        }
+        } catch (IOException ex) {}
         return s;
     }
 
