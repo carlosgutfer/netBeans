@@ -30,9 +30,10 @@ public class TeoriaHibernate
         if(al == null)
         {
             al = new Alumnos("3000965", "Gutierrez_carlos", "Leganes", "99999999");
-            s.save(al);
         }
-        
+        s.save(al);
+        show_all_alumnos(s);
+        s.delete(al);
         show_all_alumnos(s);
         s.close();
         System.exit(0);
